@@ -46,4 +46,13 @@ public class AdminServiceImpl implements AdminService {
         return adminId;
     }
 
+    // 从session中获取管理员组别
+    @Override
+    public String gainAdminGroupBySession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Admin admin = (Admin) session.getAttribute("adminInfo");
+        String adminGroup = admin.getVolunteer();
+        return adminGroup;
+    }
+
 }

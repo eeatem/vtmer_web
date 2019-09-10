@@ -16,4 +16,8 @@ public interface AdminService {
 
     // 从session中获取管理员id
     public int gainAdminIdBySession(HttpServletRequest request);
+
+    // 从session中获取管理员组别
+    public String gainAdminGroupBySession(HttpServletRequest request);
+
 }

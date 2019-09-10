@@ -59,7 +59,7 @@ public class UserController {
      * @return
      */
     @PutMapping("/update")
-    public ResponseMessage updateOne(HttpServletRequest request, User user) {
+    public ResponseMessage updateOne(@RequestBody User user, HttpServletRequest request) {
         System.out.println("尝试进行信息更新");
         // 从session中获取管理员id
         int adminId = adminService.gainAdminIdBySession(request);

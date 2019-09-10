@@ -1,12 +1,10 @@
 package com.vtmer.controller;
 
 import com.vtmer.common.ResponseMessage;
+import com.vtmer.domain.Admin;
 import com.vtmer.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,22 +18,20 @@ public class AdminController {
     AdminService adminService;
 
     /**
-     * func：管理员登陆接口
-     * @param userName
-     * @param password
+     * func: 管理员登陆接口
+     * @param admin
      * @param session
      * @param response
      * @return
      */
     @PostMapping("/login")
-    public ResponseMessage adminLogin(@RequestParam("userName") String userName,
-                                      @RequestParam("password") String password,
+    public ResponseMessage adminLogin(@RequestBody Admin admin,
                                       HttpSession session,
                                       HttpServletResponse response) {
-        if (adminService.selectAdminByUserName(userName) == null) {
+        if (adminService.selectAdminByUserName(admin.getAccount()) == null) {
             return ResponseMessage.newErrorInstance("用户名不存在");
         }
-        if (adminService.authenticationLogin(userName, password) == false) {
+        if (adminService.authenticationLogin(admin.getAccount(), admin.getPassword()) == false) {
             return ResponseMessage.newErrorInstance("密码错误，登陆失败");
         } else {
             // 把管理员账户名和组别(管理员信息)存入Cookie中
@@ -43,7 +39,7 @@ public class AdminController {
             // response.addCookie(cookie);
 
             // 把管理员账户名和组别(管理员信息)存入Session中
-            session.setAttribute("adminInfo", adminService.selectAdminByUserName(userName));
+            session.setAttribute("adminInfo", adminService.selectAdminByUserName(admin.getAccount()));
             return ResponseMessage.newSuccessInstance("登陆成功");
         }
     }

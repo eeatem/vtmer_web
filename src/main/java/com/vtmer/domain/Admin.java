@@ -7,6 +7,8 @@ public class Admin {
 
     private String password;
 
+    private String volunteer;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
+    }
+
+    public String getVolunteer() {
+        return volunteer;
+    }
+
+    public void setVolunteer(String volunteer) {
+        this.volunteer = volunteer == null ? null : volunteer.trim();
     }
 }

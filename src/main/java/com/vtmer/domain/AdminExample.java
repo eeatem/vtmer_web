@@ -303,6 +303,76 @@ public class AdminExample {
             addCriterion("password not between", value1, value2, "password");
             return (Criteria) this;
         }
+
+        public Criteria andVolunteerIsNull() {
+            addCriterion("volunteer is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerIsNotNull() {
+            addCriterion("volunteer is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerEqualTo(String value) {
+            addCriterion("volunteer =", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerNotEqualTo(String value) {
+            addCriterion("volunteer <>", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerGreaterThan(String value) {
+            addCriterion("volunteer >", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerGreaterThanOrEqualTo(String value) {
+            addCriterion("volunteer >=", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerLessThan(String value) {
+            addCriterion("volunteer <", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerLessThanOrEqualTo(String value) {
+            addCriterion("volunteer <=", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerLike(String value) {
+            addCriterion("volunteer like", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerNotLike(String value) {
+            addCriterion("volunteer not like", value, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerIn(List<String> values) {
+            addCriterion("volunteer in", values, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerNotIn(List<String> values) {
+            addCriterion("volunteer not in", values, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerBetween(String value1, String value2) {
+            addCriterion("volunteer between", value1, value2, "volunteer");
+            return (Criteria) this;
+        }
+
+        public Criteria andVolunteerNotBetween(String value1, String value2) {
+            addCriterion("volunteer not between", value1, value2, "volunteer");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
