@@ -7,8 +7,6 @@ public class Admin {
 
     private String password;
 
-    private String group;
-
     public Integer getId() {
         return id;
     }
@@ -31,13 +29,5 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
-    }
-
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(String group) {
-        this.group = group == null ? null : group.trim();
     }
 }

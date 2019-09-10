@@ -4,7 +4,9 @@ import com.vtmer.domain.State;
 import com.vtmer.domain.StateExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface StateMapper {
     long countByExample(StateExample example);
 

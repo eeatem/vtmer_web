@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.vtmer.mapper.UserMapper">
   <resultMap id="BaseResultMap" type="com.vtmer.domain.User">
-    <id column="student_number" jdbcType="INTEGER" property="studentNumber" />
+    <id column="student_number" jdbcType="BIGINT" property="studentNumber" />
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="sex" jdbcType="VARCHAR" property="sex" />
@@ -115,17 +115,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from user
-    where student_number = #{studentNumber,jdbcType=INTEGER}
+    where student_number = #{studentNumber,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from user
-    where student_number = #{studentNumber,jdbcType=INTEGER}
+    where student_number = #{studentNumber,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.vtmer.domain.UserExample">
     delete from user
@@ -140,7 +140,7 @@
       phone, wechat, first_volunteer, 
       second_volunteer, add_time, self_introduction
       )
-    values (#{studentNumber,jdbcType=INTEGER}, #{avatar,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+    values (#{studentNumber,jdbcType=BIGINT}, #{avatar,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, 
       #{major,jdbcType=VARCHAR}, #{classes,jdbcType=VARCHAR}, #{qq,jdbcType=INTEGER}, 
       #{phone,jdbcType=INTEGER}, #{wechat,jdbcType=VARCHAR}, #{firstVolunteer,jdbcType=VARCHAR}, 
@@ -198,7 +198,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="studentNumber != null">
-        #{studentNumber,jdbcType=INTEGER},
+        #{studentNumber,jdbcType=BIGINT},
       </if>
       <if test="avatar != null">
         #{avatar,jdbcType=VARCHAR},
@@ -254,7 +254,7 @@
     update user
     <set>
       <if test="record.studentNumber != null">
-        student_number = #{record.studentNumber,jdbcType=INTEGER},
+        student_number = #{record.studentNumber,jdbcType=BIGINT},
       </if>
       <if test="record.avatar != null">
         avatar = #{record.avatar,jdbcType=VARCHAR},
@@ -305,7 +305,7 @@
   </update>
   <update id="updateByExampleWithBLOBs" parameterType="map">
     update user
-    set student_number = #{record.studentNumber,jdbcType=INTEGER},
+    set student_number = #{record.studentNumber,jdbcType=BIGINT},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
@@ -326,7 +326,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update user
-    set student_number = #{record.studentNumber,jdbcType=INTEGER},
+    set student_number = #{record.studentNumber,jdbcType=BIGINT},
       avatar = #{record.avatar,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
@@ -390,7 +390,7 @@
         self_introduction = #{selfIntroduction,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where student_number = #{studentNumber,jdbcType=INTEGER}
+    where student_number = #{studentNumber,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.vtmer.domain.User">
     update user
@@ -408,7 +408,7 @@
       second_volunteer = #{secondVolunteer,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=BIGINT},
       self_introduction = #{selfIntroduction,jdbcType=LONGVARCHAR}
-    where student_number = #{studentNumber,jdbcType=INTEGER}
+    where student_number = #{studentNumber,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.vtmer.domain.User">
     update user
@@ -425,6 +425,6 @@
       first_volunteer = #{firstVolunteer,jdbcType=VARCHAR},
       second_volunteer = #{secondVolunteer,jdbcType=VARCHAR},
       add_time = #{addTime,jdbcType=BIGINT}
-    where student_number = #{studentNumber,jdbcType=INTEGER}
+    where student_number = #{studentNumber,jdbcType=BIGINT}
   </update>
 </mapper>

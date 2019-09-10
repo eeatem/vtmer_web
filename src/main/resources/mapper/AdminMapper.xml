@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vtmer.mapper.DeleteLogMapper">
-  <resultMap id="BaseResultMap" type="com.vtmer.domain.DeleteLog">
-    <result column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
-    <result column="operational_time" jdbcType="BIGINT" property="operationalTime" />
+<mapper namespace="com.vtmer.mapper.AdminMapper">
+  <resultMap id="BaseResultMap" type="com.vtmer.domain.Admin">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +65,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, admin_id, operational_time
+    id, account, password
   </sql>
-  <select id="selectByExample" parameterType="com.vtmer.domain.DeleteLogExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.vtmer.domain.AdminExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from delete_log
+    from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,69 +81,70 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.vtmer.domain.DeleteLogExample">
-    delete from delete_log
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from admin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from admin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.vtmer.domain.AdminExample">
+    delete from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.vtmer.domain.DeleteLog">
-    insert into delete_log (id, user_id, admin_id, 
-      operational_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, 
-      #{operationalTime,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.vtmer.domain.Admin">
+    insert into admin (id, account, password
+      )
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.vtmer.domain.DeleteLog">
-    insert into delete_log
+  <insert id="insertSelective" parameterType="com.vtmer.domain.Admin">
+    insert into admin
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="userId != null">
-        user_id,
+      <if test="account != null">
+        account,
       </if>
-      <if test="adminId != null">
-        admin_id,
-      </if>
-      <if test="operationalTime != null">
-        operational_time,
+      <if test="password != null">
+        password,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
       </if>
-      <if test="adminId != null">
-        #{adminId,jdbcType=INTEGER},
-      </if>
-      <if test="operationalTime != null">
-        #{operationalTime,jdbcType=BIGINT},
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.vtmer.domain.DeleteLogExample" resultType="java.lang.Long">
-    select count(*) from delete_log
+  <select id="countByExample" parameterType="com.vtmer.domain.AdminExample" resultType="java.lang.Long">
+    select count(*) from admin
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update delete_log
+    update admin
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
       </if>
-      <if test="record.adminId != null">
-        admin_id = #{record.adminId,jdbcType=INTEGER},
-      </if>
-      <if test="record.operationalTime != null">
-        operational_time = #{record.operationalTime,jdbcType=BIGINT},
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -152,13 +152,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update delete_log
+    update admin
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      admin_id = #{record.adminId,jdbcType=INTEGER},
-      operational_time = #{record.operationalTime,jdbcType=BIGINT}
+      account = #{record.account,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.vtmer.domain.Admin">
+    update admin
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vtmer.domain.Admin">
+    update admin
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

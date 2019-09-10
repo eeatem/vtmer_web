@@ -4,7 +4,9 @@ import com.vtmer.domain.StatusLog;
 import com.vtmer.domain.StatusLogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface StatusLogMapper {
     long countByExample(StatusLogExample example);
 

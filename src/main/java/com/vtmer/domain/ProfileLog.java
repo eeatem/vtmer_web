@@ -3,7 +3,7 @@ package com.vtmer.domain;
 public class ProfileLog {
     private Integer id;
 
-    private Integer userId;
+    private Long userId;
 
     private Integer adminId;
 
@@ -19,11 +19,11 @@ public class ProfileLog {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 

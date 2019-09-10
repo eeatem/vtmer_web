@@ -3,9 +3,9 @@ package com.vtmer.domain;
 public class StatusLog {
     private Integer id;
 
-    private Integer userId;
+    private Long userId;
 
-    private Integer adminJd;
+    private Integer adminId;
 
     private String oldStatus;
 
@@ -23,20 +23,20 @@ public class StatusLog {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public Integer getAdminJd() {
-        return adminJd;
+    public Integer getAdminId() {
+        return adminId;
     }
 
-    public void setAdminJd(Integer adminJd) {
-        this.adminJd = adminJd;
+    public void setAdminId(Integer adminId) {
+        this.adminId = adminId;
     }
 
     public String getOldStatus() {

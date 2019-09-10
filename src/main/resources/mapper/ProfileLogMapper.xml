@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.vtmer.mapper.StatusLogMapper">
-  <resultMap id="BaseResultMap" type="com.vtmer.domain.StatusLog">
+<mapper namespace="com.vtmer.mapper.ProfileLogMapper">
+  <resultMap id="BaseResultMap" type="com.vtmer.domain.ProfileLog">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="admin_jd" jdbcType="INTEGER" property="adminJd" />
-    <result column="old_status" jdbcType="VARCHAR" property="oldStatus" />
-    <result column="new_status" jdbcType="VARCHAR" property="newStatus" />
-    <result column="volunteer_flag" jdbcType="INTEGER" property="volunteerFlag" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="admin_id" jdbcType="INTEGER" property="adminId" />
     <result column="operational_time" jdbcType="BIGINT" property="operationalTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.vtmer.domain.ProfileLog">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,15 +69,20 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, admin_jd, old_status, new_status, volunteer_flag, operational_time
+    id, user_id, admin_id, operational_time
   </sql>
-  <select id="selectByExample" parameterType="com.vtmer.domain.StatusLogExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.vtmer.domain.ProfileLogExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from status_log
+    ,
+    <include refid="Blob_Column_List" />
+    from profile_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -85,32 +90,46 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.vtmer.domain.ProfileLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from profile_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    from status_log
+    ,
+    <include refid="Blob_Column_List" />
+    from profile_log
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from status_log
+    delete from profile_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.vtmer.domain.StatusLogExample">
-    delete from status_log
+  <delete id="deleteByExample" parameterType="com.vtmer.domain.ProfileLogExample">
+    delete from profile_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.vtmer.domain.StatusLog">
-    insert into status_log (id, user_id, admin_jd, 
-      old_status, new_status, volunteer_flag, 
-      operational_time)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{adminJd,jdbcType=INTEGER}, 
-      #{oldStatus,jdbcType=VARCHAR}, #{newStatus,jdbcType=VARCHAR}, #{volunteerFlag,jdbcType=INTEGER}, 
-      #{operationalTime,jdbcType=BIGINT})
+  <insert id="insert" parameterType="com.vtmer.domain.ProfileLog">
+    insert into profile_log (id, user_id, admin_id, 
+      operational_time, content)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, #{adminId,jdbcType=INTEGER}, 
+      #{operationalTime,jdbcType=BIGINT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.vtmer.domain.StatusLog">
-    insert into status_log
+  <insert id="insertSelective" parameterType="com.vtmer.domain.ProfileLog">
+    insert into profile_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -118,20 +137,14 @@
       <if test="userId != null">
         user_id,
       </if>
-      <if test="adminJd != null">
-        admin_jd,
-      </if>
-      <if test="oldStatus != null">
-        old_status,
-      </if>
-      <if test="newStatus != null">
-        new_status,
-      </if>
-      <if test="volunteerFlag != null">
-        volunteer_flag,
+      <if test="adminId != null">
+        admin_id,
       </if>
       <if test="operationalTime != null">
         operational_time,
+      </if>
+      <if test="content != null">
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -139,104 +152,99 @@
         #{id,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=INTEGER},
+        #{userId,jdbcType=BIGINT},
       </if>
-      <if test="adminJd != null">
-        #{adminJd,jdbcType=INTEGER},
-      </if>
-      <if test="oldStatus != null">
-        #{oldStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="newStatus != null">
-        #{newStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="volunteerFlag != null">
-        #{volunteerFlag,jdbcType=INTEGER},
+      <if test="adminId != null">
+        #{adminId,jdbcType=INTEGER},
       </if>
       <if test="operationalTime != null">
         #{operationalTime,jdbcType=BIGINT},
       </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.vtmer.domain.StatusLogExample" resultType="java.lang.Long">
-    select count(*) from status_log
+  <select id="countByExample" parameterType="com.vtmer.domain.ProfileLogExample" resultType="java.lang.Long">
+    select count(*) from profile_log
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update status_log
+    update profile_log
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=BIGINT},
       </if>
-      <if test="record.adminJd != null">
-        admin_jd = #{record.adminJd,jdbcType=INTEGER},
-      </if>
-      <if test="record.oldStatus != null">
-        old_status = #{record.oldStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="record.newStatus != null">
-        new_status = #{record.newStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="record.volunteerFlag != null">
-        volunteer_flag = #{record.volunteerFlag,jdbcType=INTEGER},
+      <if test="record.adminId != null">
+        admin_id = #{record.adminId,jdbcType=INTEGER},
       </if>
       <if test="record.operationalTime != null">
         operational_time = #{record.operationalTime,jdbcType=BIGINT},
       </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update profile_log
+    set id = #{record.id,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
+      operational_time = #{record.operationalTime,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update status_log
+    update profile_log
     set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      admin_jd = #{record.adminJd,jdbcType=INTEGER},
-      old_status = #{record.oldStatus,jdbcType=VARCHAR},
-      new_status = #{record.newStatus,jdbcType=VARCHAR},
-      volunteer_flag = #{record.volunteerFlag,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      admin_id = #{record.adminId,jdbcType=INTEGER},
       operational_time = #{record.operationalTime,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.vtmer.domain.StatusLog">
-    update status_log
+  <update id="updateByPrimaryKeySelective" parameterType="com.vtmer.domain.ProfileLog">
+    update profile_log
     <set>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=INTEGER},
+        user_id = #{userId,jdbcType=BIGINT},
       </if>
-      <if test="adminJd != null">
-        admin_jd = #{adminJd,jdbcType=INTEGER},
-      </if>
-      <if test="oldStatus != null">
-        old_status = #{oldStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="newStatus != null">
-        new_status = #{newStatus,jdbcType=VARCHAR},
-      </if>
-      <if test="volunteerFlag != null">
-        volunteer_flag = #{volunteerFlag,jdbcType=INTEGER},
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=INTEGER},
       </if>
       <if test="operationalTime != null">
         operational_time = #{operationalTime,jdbcType=BIGINT},
       </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.vtmer.domain.StatusLog">
-    update status_log
-    set user_id = #{userId,jdbcType=INTEGER},
-      admin_jd = #{adminJd,jdbcType=INTEGER},
-      old_status = #{oldStatus,jdbcType=VARCHAR},
-      new_status = #{newStatus,jdbcType=VARCHAR},
-      volunteer_flag = #{volunteerFlag,jdbcType=INTEGER},
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.vtmer.domain.ProfileLog">
+    update profile_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      admin_id = #{adminId,jdbcType=INTEGER},
+      operational_time = #{operationalTime,jdbcType=BIGINT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.vtmer.domain.ProfileLog">
+    update profile_log
+    set user_id = #{userId,jdbcType=BIGINT},
+      admin_id = #{adminId,jdbcType=INTEGER},
       operational_time = #{operationalTime,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>

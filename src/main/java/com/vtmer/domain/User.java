@@ -1,7 +1,7 @@
 package com.vtmer.domain;
 
 public class User {
-    private Integer studentNumber;
+    private Long studentNumber;
 
     private String avatar;
 
@@ -31,11 +31,11 @@ public class User {
 
     private String selfIntroduction;
 
-    public Integer getStudentNumber() {
+    public Long getStudentNumber() {
         return studentNumber;
     }
 
-    public void setStudentNumber(Integer studentNumber) {
+    public void setStudentNumber(Long studentNumber) {
         this.studentNumber = studentNumber;
     }
 
@@ -149,5 +149,26 @@ public class User {
 
     public void setSelfIntroduction(String selfIntroduction) {
         this.selfIntroduction = selfIntroduction == null ? null : selfIntroduction.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "studentNumber=" + studentNumber +
+                ", avatar='" + avatar + '\'' +
+                ", name='" + name + '\'' +
+                ", sex='" + sex + '\'' +
+                ", grade='" + grade + '\'' +
+                ", college='" + college + '\'' +
+                ", major='" + major + '\'' +
+                ", classes='" + classes + '\'' +
+                ", qq=" + qq +
+                ", phone=" + phone +
+                ", wechat='" + wechat + '\'' +
+                ", firstVolunteer='" + firstVolunteer + '\'' +
+                ", secondVolunteer='" + secondVolunteer + '\'' +
+                ", addTime=" + addTime +
+                ", selfIntroduction='" + selfIntroduction + '\'' +
+                '}';
     }
 }

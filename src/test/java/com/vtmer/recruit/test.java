@@ -5,6 +5,7 @@ import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -22,6 +23,12 @@ public class test {
         DefaultShellCallback callback = new DefaultShellCallback(overwrite);
         MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
         myBatisGenerator.generate(null);
+    }
+
+    @Test
+    public void test1() {
+        String path = ClassUtils.getDefaultClassLoader().getResource("avatars").getPath();
+        System.out.println(path);
     }
 
 }

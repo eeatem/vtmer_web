@@ -3,11 +3,11 @@ package com.vtmer.domain;
 public class State {
     private Integer id;
 
-    private Integer userId;
-
-    private Integer flag;
+    private Long userId;
 
     private String status;
+
+    private Integer flag;
 
     public Integer getId() {
         return id;
@@ -17,20 +17,12 @@ public class State {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(Long userId) {
         this.userId = userId;
-    }
-
-    public Integer getFlag() {
-        return flag;
-    }
-
-    public void setFlag(Integer flag) {
-        this.flag = flag;
     }
 
     public String getStatus() {
@@ -39,5 +31,13 @@ public class State {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
     }
 }

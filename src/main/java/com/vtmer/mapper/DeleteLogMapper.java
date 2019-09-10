@@ -4,7 +4,9 @@ import com.vtmer.domain.DeleteLog;
 import com.vtmer.domain.DeleteLogExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface DeleteLogMapper {
     long countByExample(DeleteLogExample example);
 
